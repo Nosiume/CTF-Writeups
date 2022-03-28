@@ -85,7 +85,7 @@ The *exploit.py* script :
 
 And we get the same result just with a script and with a much cooler display :O
 
-[!img](images/flagscript.png)
+![img](images/flagscript.png)
 
 ### Reflections
 
