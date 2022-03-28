@@ -94,4 +94,4 @@ This is a beginner buffer overflow exploit challenge that's always nice and chil
 That's it for this WriteUp of **babyRet** from *WolvSec 2022CTF*, I really hoped you enjoyed it since this is my first writeup ever so yeaaaah ! I'll probably try to do the other pwn challenges since I managed to pwn all of them so see ya in the next challenges I suppose :D
 
 ---
-[Back to home](../README.md)
+[Back to home](../../README.md)
