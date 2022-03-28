@@ -64,7 +64,7 @@ We can use GDB to search for that and set a breakpoint when the canary is loaded
 
 Now let's run the program and see if our setup is working.
 
-![img](images/debug_canary00.png)
+![img](images/debug_canary0.png)
 
 Since we put a breakpoint when the canary was loaded in **EAX** register we can check the value of **EAX** when we hit the breakpoint and it should display the value of the canary (at least for that execution of the program since the canary is set to a new value everytime the **vuln()** function is called).
 
