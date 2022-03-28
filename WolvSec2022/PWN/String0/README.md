@@ -80,6 +80,7 @@ As you can see the value that's being displayed does fit the value we got in **E
 Now, knowing that the idea would be to include the canary in our buffer overflow payload so that the canary gets overwritten with it's own value thus not triggering the stack smashing protection...
 
 ![img](images/ebp-0xc.png)
+
 ![img](images/ebp-0x1c.png)
 
 We can see from those assembly instructions that the canary is stored at address **ebp-0xc** and our input buffer is stored at address **ebp-0x1c**
@@ -150,4 +151,4 @@ I hope you enjoyed this writeup which took me a looooooot of time to write and I
   
 Have a nice day :D
 ---
-[Back to home](https://github.com/Nosiume/CTF-Writeups/blob/master/WolvSec2022/README.md)
+[Back to home](../../README.md)
