@@ -140,6 +140,7 @@ Let's try it out on the ctf remote host :)
 ![img](images/result.png)
 
 And we got the flag ! We successfully bypassed the stack canary and manipulated **EIP** to return to the **print_flag()** function !!!
+
 Flag : **wsc{W3_w4nt_m0R3_PWNS!}**
 
 
