@@ -36,7 +36,7 @@ We can test that out by inputing a bunch of As into our program and see if we ge
 
 And we do ! Let's check in gdb if we can overwrite **RIP** and control the program's execution flow.
 
-[!img](images/overflow_rip.png)
+![img](images/overflow_rip.png)
 
 Perfect ! Now we just have to manipulate rip to return to that **print_flag()** function which should print us the flag when executed on the remote.
 
