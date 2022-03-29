@@ -70,14 +70,14 @@ Since we put a breakpoint when the canary was loaded in **EAX** register we can 
 
 In this case we can see that the canary is set to **0x305ee200** !
 
-Now let's try to find it with our format string and see if we have a match
+Now let's try to find it with our format string and see if we have a match.
 I tried, %1$x, %2$x, %3$x... until I got a matching value at **%11$x**
 
 ![img](images/found_payload_fs.png)
 
 As you can see the value that's being displayed does fit the value we got in **EAX** register which means that **%11$x** will leak us the canary !
 
-Now, knowing that the idea would be to include the canary in our buffer overflow payload so that the canary gets overwritten with it's own value thus not triggering the stack smashing protection...
+Now knowing that, the idea would be to include the canary in our buffer overflow payload so that the canary gets overwritten with it's own value thus not triggering the stack smashing protection...
 
 ![img](images/ebp-0xc.png)
 
