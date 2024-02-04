@@ -39,6 +39,8 @@ I found that "batcat" is also a command with the "bat" module:
 
 Now let's try using "batcat fl4gf0rF1r5t4pp.php" as our payload.
 
+### Solve
+
 ![img](./web_4.png)
 
 Well, I guess that was it lol. A quite confusing challenge overall which took way too much time as it should have.
