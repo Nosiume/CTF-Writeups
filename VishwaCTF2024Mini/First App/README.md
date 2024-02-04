@@ -39,7 +39,7 @@ I found that "batcat" is also a command with the "bat" module:
 
 Now let's try using "batcat fl4gf0rF1r5t4pp.php" as our payload.
 
-[!img](./web_4.png)
+![img](./web_4.png)
 
 Well, I guess that was it lol. A quite confusing challenge overall which took way too much time as it should have.
 Flag: VishwaCTF{1_just_re4lis3d_1_f*ck3d_up_my_4pplic4t10n}
