@@ -38,6 +38,7 @@ It should be encoded in two steps as follows:
 - Swap the first and second character of the string *S*, then swap the 3rd and 4th character, then the 5th and 6th character and so on. If the length of *S* is odd, the last character should not be swapped with any other.
 - Replace each occurrence of the letter 'a' in the message obtained after the first step by the letter 'z', each occurrence of 'b' by 'y', each occurrence of 'c' by 'x', etc, and each occurrence of 'z' in the message obtained after the first step by 'a'.
 
+### Let's solve it !
 Now all we have to do is build an algorithm that does the same steps but backwards in order to reverse the encoding
 Here is my script in python:
 
