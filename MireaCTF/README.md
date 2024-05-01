@@ -22,4 +22,4 @@ The challenges were mostly beginner to intermediate and were quite fun to solve!
    - [ ] [helloname](pwn/helloname/README.md)
    - [ ] [biglo1337](pwn/biglo1337/README.md)
    - [ ] [ege](pwn/ege/README.md)
-   - [ ] [nyaahko](pwn/nyaahko/README.md)
+   - [ ] [nyaahko](pwn/nyahko/README.md)
