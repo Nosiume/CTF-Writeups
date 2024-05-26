@@ -10,3 +10,4 @@ These are the currently available CTF writeups on this repo:
  - [] [ShunyaCTF](./ShunyaCTF/README.md)
  - [] [HackEnvision](./HackEnvision/README.md)
  - [] [MireaCTF](./MireaCTF/README.md)
+ - [] [L3akCTF 2024](./L3akCTF-2024/README.md)
