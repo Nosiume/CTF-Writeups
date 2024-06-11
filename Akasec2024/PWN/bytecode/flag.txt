@@ -1,0 +1,4 @@
+AKASEC{fake_flag_for_testing}
+
+
+// Actual flag was : AKASEC{h4lF4Zz_8y7ec0De5_h4lF4zZ_f50P}
