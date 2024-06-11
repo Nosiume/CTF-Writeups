@@ -499,6 +499,8 @@ And surely enough, we get a shell and a flag :D
 
 **Flag :** AKASEC{h4lF4Zz_8y7ec0De5_h4lF4zZ_f50P}
 
+The full final solve script is available [here](./solve.py).
+
 ## Reflections
 
 Overall, this was an amazing challenge. I loved the complexity added by the bytecode interpreter and the whole idea of finding bugs
