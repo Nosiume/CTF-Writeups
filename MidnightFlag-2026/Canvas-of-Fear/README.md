@@ -156,7 +156,7 @@ Vérifions notre théorie :
 
 ![PoC Integer overflow](./images/int_overflow_poc.png)
 
-Pour les plus curieux vous verrez que faire l'opération ci-dessus dans un programme C avec un type int donnera le résultat "-8" qui valide donc bien la vérification du programme tout en sortant de la zone de mémoire prévue !
+Pour les plus curieux vous verrez que faire l'opération ci-dessus dans un programme C avec un type int donnera le résultat "-8" et "-24" pour le binaire qui multiplie par 3 pour l'index des composantes RGB. Notre payload valide donc bien la vérification du programme tout en sortant de la zone de mémoire prévue !
 
 ### Getting pixels values out of a canvas
 
@@ -214,7 +214,7 @@ cmd(b'GET 1')
 
 On note ici que le canvas 3 est important pour notre exploit puisqu'il nous permet d'avoir un pointeur de donnée facile à viser pour notre arbitrary write / read primitive et qu'il joue aussi le rôle de bloqueur de consolidation malloc pour préserver notre grand chunk dans les **unsortedbin** et nous permettre d'obtenir le leak libc dont nous avons tant besoin !
 
-J'ai pu calculé que `8589934591*50 + 42 = -8` pour un int 32 bits ce qui nous permet d'aller modifier la valeur du field **height** de la structure associée au canvas "1". En injectant **0x34** à la place de **0x32** cela nous permet de légèrement débordé dans les données du canvas "2" sur la heap et d'afficher les pointeurs de heap et libc que nous avons pu placer via la suppression du canvas "2".
+J'ai pu calculé que `(8589934591*50 + 42)*3 = -24` pour un int 32 bits ce qui nous permet d'aller modifier la valeur du field **height** de la structure associée au canvas "1". En injectant **0x34** à la place de **0x32** cela nous permet de légèrement débordé dans les données du canvas "2" sur la heap et d'afficher les pointeurs de heap et libc que nous avons pu placer via la suppression du canvas "2".
 
 On peut voir que le programme nous dump un gros bloc de données qui contient bien ce qui s'apparente à nos métadonnées canvas 2 :
 
