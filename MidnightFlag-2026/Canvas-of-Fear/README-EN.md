@@ -153,7 +153,7 @@ Let's verify our theory:
 
 ![PoC Integer overflow](./images/int_overflow_poc.png)
 
-For the curious, performing the above operation in a C program with an `int` type will yield the result `-8`, which therefore does pass the program's check while going outside the intended memory region!
+For the curious, performing the above operation in a C program with an `int` type will yield the result `-8` (the program actually multiplies by 3 after for the index of the RGB bytes so it accesses index -24), which therefore does pass the program's check while going outside the intended memory region!
 
 ### Reading Pixel Values from a Canvas
 
@@ -211,7 +211,7 @@ cmd(b'GET 1')
 
 Note that canvas 3 is important to our exploit since it gives us an easy-to-target data pointer for our arbitrary write/read primitive, and also acts as a malloc consolidation blocker to preserve our large chunk in the **unsortedbin** and thus allow us to obtain the libc leak we so desperately need!
 
-I calculated that `8589934591*50 + 42 = -8` for a 32-bit int, which lets us modify the **height** field of the structure associated with canvas "1". By injecting **0x34** in place of **0x32**, we can slightly overflow into canvas "2"'s data on the heap and display the heap and libc pointers we placed there via the deletion of canvas "2".
+I calculated that `(8589934591*50 + 42)*3 = -24` for a 32-bit int, which lets us modify the **height** field of the structure associated with canvas "1". By injecting **0x34** in place of **0x32**, we can slightly overflow into canvas "2"'s data on the heap and display the heap and libc pointers we placed there via the deletion of canvas "2".
 
 We can see that the program dumps a large block of data that does contain what appear to be canvas 2's metadata:
 
