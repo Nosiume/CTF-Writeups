@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fear demands your attention</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Eater&family=Butcherman&family=Griffy&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="flickering-light"></div>
+    <div id="mouse-light"></div>
+    <div class="container">
+        <div class="header">
+            <h1>Admin Messages</h1>
+            <div class="subtitle">Messages from the void...</div>
+        </div>
+
+        {% if messages %}
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value">{{ messages|length }}</div>
+                <div class="stat-label">Total Messages</div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="messages">
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="message">
+                    <div class="message-header">
+                        <div class="message-avatar">{{ ((msg.author or 'Anonymous')|safe)[0]|upper }}</div>
+                        <div class="author">{{ (msg.author or 'Anonymous') | safe }}</div>
+                    </div>
+                    <div class="content">{{ (msg.content or '') | safe }}</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty">
+                    <div>No messages yet.</div>
+                    <div style="margin-top: 10px; font-size: 14px;">The void is silent...</div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="refresh-info">
+            Refresh the page to see new messages
+        </div>
+    </div>
+</body>
+</html>

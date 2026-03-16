@@ -1,0 +1,13 @@
+{
+  "name": "admin-bot",
+  "version": "1.0.0",
+  "description": "Admin bot to check messages",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "puppeteer": "^24.15.0"
+  }
+}
+

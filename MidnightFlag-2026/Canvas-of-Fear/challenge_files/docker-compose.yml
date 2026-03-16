@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: canvas_of_fear
+    ports:
+      - "5080:5080"
+
+
