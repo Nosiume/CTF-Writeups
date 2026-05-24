@@ -1,0 +1,1 @@
+/usr/bin/cc -no-pie -Wl,--dependency-file=CMakeFiles/good_soldier.dir/link.d CMakeFiles/good_soldier.dir/src/app.c.o CMakeFiles/good_soldier.dir/src/game.c.o CMakeFiles/good_soldier.dir/src/mem_arena.c.o -o good_soldier

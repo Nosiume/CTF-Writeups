@@ -1,0 +1,53 @@
+name: "File Sharing Protocol"
+author: "Nosiume"
+category: Pwn
+description: |-
+    ![files](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmdhbGo3Mzg3OGxidzZhMjk4NXFtOG5wYjc2ZnZuY2dkcW9jdXF1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SuEFqeWxlLcvm/giphy.gif)
+
+    Pour impressioner mes profs sur un rendu de projet, j'ai décidé de créer un concurrent à FTP !!
+    FSP (File Sharing Protocol) est un protocole qui met en avant les valeurs du partage et de la bienveillance :)
+    Un de mes amis qui travail en cyber m'a même dit en blaguant que le protocole partage mes données privées aussi !
+    Je me demande bien ce qu'il pourrait vouloir dire :p
+
+    Auteur : [Nosiume](https://discord.com/users/304613327739289600)
+
+attribution: 'Auteur : [Nosiume](https://discord.com/users/304613327739289600)'
+# Liste des fichiers à fournirs aux joueurs
+files:
+    - files/dist.zip
+flags:
+    - BZHCTF{Pwn1ng_th3_Pyth0n_1nt3rpr3t3r_1s_Cr4zYYYYYYY}
+
+# Les tags sont visisbles par les joueurs et peuvent donner une idée du thème du challenge
+# Il doit y avoir au moins un tag annoncant la difficulté (Très Facile/Facile/Moyen/Difficile/Très Difficile)
+tags:
+    - Difficile
+    - Python
+    - Libs
+# Les topics ne sont visibles que par les admins uniquement
+topics:
+    - buffer overflow
+    - pwn dans l'interpreter python
+
+## Éviter de toucher à ce qui est en dessous ##
+
+# Valeur maximale du challenge en points
+value: 500
+type: ctfkit
+state: visible
+extra:
+    template_name: fsp
+    initial: 500
+    decay: 100
+    minimum: 50
+
+    # Pour les challenge à la demande uniquement
+    # À remplir par un sysadmin
+    # template_name: exemple-tcp 
+
+# Pour les challenge communs uniquement
+# À remplir par un sysadmin
+connection_info: nc fsp.chall.ctf.bzh 1337
+
+version: "0.1"
+

@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,--dependency-file=CMakeFiles/speeeeeed.dir/link.d CMakeFiles/speeeeeed.dir/src/app.c.o CMakeFiles/speeeeeed.dir/src/http_handler.c.o CMakeFiles/speeeeeed.dir/src/http_parser.c.o CMakeFiles/speeeeeed.dir/src/server.c.o -o speeeeeed

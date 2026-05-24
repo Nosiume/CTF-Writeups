@@ -1,0 +1,6 @@
+services:
+  good_soldier:
+    build: .
+    ports:
+      - "1337:1337"
+

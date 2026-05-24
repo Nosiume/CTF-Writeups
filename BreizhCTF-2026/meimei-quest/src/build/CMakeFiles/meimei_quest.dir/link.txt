@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,--dependency-file=CMakeFiles/meimei_quest.dir/link.d CMakeFiles/meimei_quest.dir/src/main.c.o -o meimei_quest

@@ -1,0 +1,1 @@
+/usr/bin/cc -fPIC -shared -Wl,--dependency-file=CMakeFiles/cool_compress.dir/link.d -Wl,-soname,cool_compress.so -o cool_compress.so CMakeFiles/cool_compress.dir/src/cool_compress.c.o

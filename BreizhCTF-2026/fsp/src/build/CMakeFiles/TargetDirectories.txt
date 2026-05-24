@@ -1,0 +1,3 @@
+/home/n0s/Documents/code/breizh/challenges/pwn/FSP/src/build/CMakeFiles/cool_compress.dir
+/home/n0s/Documents/code/breizh/challenges/pwn/FSP/src/build/CMakeFiles/edit_cache.dir
+/home/n0s/Documents/code/breizh/challenges/pwn/FSP/src/build/CMakeFiles/rebuild_cache.dir

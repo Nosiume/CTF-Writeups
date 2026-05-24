@@ -1,0 +1,52 @@
+name: "Mei Mei Quest"
+author: "Nosiume"
+category: Pwn
+description: |-
+  ![MEIMEI<3](https://i.giphy.com/jQIzBnyfvCXHCjwTYy.webp)
+
+  Mei Mei est encore coincée dans un sac de frites... Saurez-vous la sauver de ce malheur terrible ?
+  Quête par quête vous devrez montrer votre compréhension des concepts de base du pwn pour sauver ce petit chat trop mignon :p
+
+  Auteur : [Nosiume](https://discord.com/users/304613327739289600)
+
+attribution: 'Auteur : [Nosiume](https://discord.com/users/304613327739289600)'
+
+# Liste des fichiers à fournirs aux joueurs
+files:
+  - files/chall.c
+  - files/meimei_quest
+
+flags:
+  - BZHCTF{Th4nk_Y0u_f0r_s4v1ng_M31M31_<3}
+
+# Les tags sont visisbles par les joueurs et peuvent donner une idée du thème du challenge
+# Il doit y avoir au moins un tag annoncant la difficulté (Très Facile/Facile/Moyen/Difficile/Très Difficile)
+tags:
+  - Facile
+
+# Les topics ne sont visibles que par les admins uniquement
+topics:
+  - buffer overflow
+  - format string
+  - shellcoding
+
+## Éviter de toucher à ce qui est en dessous ##
+
+# Valeur maximale du challenge en points
+value: 500
+type: dynamic
+state: visible
+extra:
+  initial: 500
+  decay: 100
+  minimum: 50
+
+  # Pour les challenge à la demande uniquement
+  # À remplir par un sysadmin
+  # template_name: exemple-tcp
+
+# Pour les challenge communs uniquement
+# À remplir par un sysadmin
+connection_info: nc meimei-quest.chall.ctf.bzh 1337
+
+version: "0.1"

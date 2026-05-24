@@ -1,0 +1,3 @@
+/home/n0s/Documents/code/breizh/challenges/pwn/speeeeeed/src/build/CMakeFiles/speeeeeed.dir
+/home/n0s/Documents/code/breizh/challenges/pwn/speeeeeed/src/build/CMakeFiles/edit_cache.dir
+/home/n0s/Documents/code/breizh/challenges/pwn/speeeeeed/src/build/CMakeFiles/rebuild_cache.dir

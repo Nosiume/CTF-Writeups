@@ -1,0 +1,52 @@
+name: "Xtensive Panel"
+author: "Nosiume"
+category: Pwn
+description: |-
+    ![esp32_hater](https://media.tenor.com/urWK-g7KTFAAAAAd/tenor.gif)
+
+    Lors d'un pentest, nous avons trouvé une interface bizarre disponible en CLI qui semble être connectée à un ESP32
+    pour gérer différents composants industriels de notre cîble ! En faisant un peu plus de recherche nous avons pu trouver
+    le firmware exécuté par l'ESP32. Pensez-vous être capable de l'exploiter afin d'extraire les secrets cachés dans la mémoire de cet appareil ??
+
+    (Le flag est dans la partition SPIFFS de l'ESP32 au chemin "flag.txt")
+
+    Auteur : [Nosiume](https://discord.com/users/304613327739289600)
+attribution: 'Auteur : [Nosiume](https://discord.com/users/304613327739289600)'
+# Liste des fichiers à fournirs aux joueurs
+files:
+    - files/dist.zip
+flags:
+    - BZHCTF{Noooooooooooooo_Y0u_m4n4g3d_t0_PwN_my_w31rd_4rch1t3ctur3}
+
+# Les tags sont visisbles par les joueurs et peuvent donner une idée du thème du challenge
+# Il doit y avoir au moins un tag annoncant la difficulté (Très Facile/Facile/Moyen/Difficile/Très Difficile)
+tags:
+    - Très Difficile
+    - ESP32
+    - Système embarqué
+# Les topics ne sont visibles que par les admins uniquement
+topics:
+    - buffer overflow
+    - Pwn embarqué
+
+## Éviter de toucher à ce qui est en dessous ##
+
+# Valeur maximale du challenge en points
+value: 500
+type: dynamic
+state: visible
+extra:
+    initial: 500
+    decay: 100
+    minimum: 50
+
+    # Pour les challenge à la demande uniquement
+    # À remplir par un sysadmin
+    # template_name: exemple-tcp
+
+# Pour les challenge communs uniquement
+# À remplir par un sysadmin
+connection_info: nc xtensive-panel.chall.ctf.bzh 1337
+
+version: "0.1"
+

@@ -1,0 +1,51 @@
+name: "Good Soldier"
+author: "Nosiume"
+category: Pwn
+description: |-
+  ![Enter the arena](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGo0NXE4NnUwYW41a3dxaDhhYzFlMmR1Y25tdDh1Z2ZubDRsY2dmaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/igyfXHSWGHZME0PLvr/giphy.gif)
+
+  Cette semaine, j'ai appris le concept d'arena allocator pour optimiser les calls à malloc !
+  J'ai codé un petit jeu en utilisant ce concept, à vous de l'essayer et pensez bien à laisser une review très complète !
+
+  Auteur : [Nosiume](https://discord.com/users/304613327739289600)
+
+attribution: 'Auteur : [Nosiume](https://discord.com/users/304613327739289600)'
+
+# Liste des fichiers à fournirs aux joueurs
+files:
+  - files/dist.zip
+
+flags:
+  - BZHCTF{W3ll_D0n3_mY_br4v3_s0ld1er_!!!_y0u_b34t_th3_4r3n4s_:O}
+
+# Les tags sont visisbles par les joueurs et peuvent donner une idée du thème du challenge
+# Il doit y avoir au moins un tag annoncant la difficulté (Très Facile/Facile/Moyen/Difficile/Très Difficile)
+tags:
+  - Facile
+  - Mini-Game
+
+# Les topics ne sont visibles que par les admins uniquement
+topics:
+  - buffer overflow
+  - memory arena backfire
+
+## Éviter de toucher à ce qui est en dessous ##
+
+# Valeur maximale du challenge en points
+value: 500
+type: dynamic
+state: visible
+extra:
+  initial: 500
+  decay: 100
+  minimum: 50
+
+  # Pour les challenge à la demande uniquement
+  # À remplir par un sysadmin
+  # template_name: exemple-tcp
+
+# Pour les challenge communs uniquement
+# À remplir par un sysadmin
+connection_info: nc goodsoldier.chall.ctf.bzh 1337
+
+version: "0.1"

@@ -1,0 +1,5 @@
+services:
+  xtensive_panel:
+    build: .
+    ports:
+      - "1337:1337"
