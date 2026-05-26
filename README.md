@@ -13,3 +13,4 @@ These are the currently available CTF writeups on this repo:
  - [] [L3akCTF 2024](./L3akCTF-2024/README.md)
  - [] [AkasecCTF 2024](./Akasec2024/README.md)
  - [] [Midnight Flag 2026](./MidnightFlag-2026/README.md)
+ - [] [Breizh CTF 2026](./BreizhCTF-2026/README.md)
